@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Horizontal Scroll</title>
+        <style media="screen">
+            body{
+                margin: 0 auto;
+            }
+            .container{
+                border: 1px solid #ccc;
+                padding: 10px 0;
+                margin: 40px 30px;
+                width: 300px;
+                height: 100px;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+            .inner-container{
+                padding: 35px 0;
+            }
+            .container span{
+                display: inline-block;
+                border: 1px solid red;
+                /*margin: 0 5px;*/
+                padding: 5px;
+            }
+            .container span:hover{
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="inner-container">
+                <span index="1">Text 1</span>
+                <span index="2">Text 2</span>
+                <span index="3">Text 3</span>
+                <span index="4">Text 4</span>
+                <span index="5">Text 5</span>
+                <span index="6">Text 6</span>
+                <span index="7">Text 7</span>
+                <span index="8">Text 8</span>
+                <span index="9">Text 9</span>
+                <span index="10">Text 10</span>
+                <span index="11">Text 11</span>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            var width = 0;
+            var container = document.getElementsByClassName("container");
+            var wrapper = document.getElementsByClassName("inner-container");
+            var offsetWidthArray = [];
+            wrapper[0].childNodes.forEach(function(item, index){
+                if(item.nodeType == 1){
+                    width = width + item.offsetWidth;
+                    offsetWidthArray.push(width)
+                }
+            });
+            wrapper[0].style.width = offsetWidthArray[offsetWidthArray.length -1]+offsetWidthArray[0]+"px";
+            var scrollWidth = wrapper[0].offsetWidth - container[0].offsetWidth;
+            var endScrollLeft = wrapper[0].style.width - container[0].offsetWidth;
+            container[0].addEventListener("click", function(event){
+                var target = event.target;
+                $('.container').animate({scrollLeft: (target.offsetLeft - 20)+ (target.offsetWidth/2) - scrollWidth/2}, 500);
+            });
+            
+        </script>
+    </body>
+</html>
